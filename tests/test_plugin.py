@@ -142,6 +142,30 @@ def test_guard_stops_writes_to_the_log(tmp_path, command):
     assert "append-only" in guard(bash(command, "processor"), tmp_path)
 
 
+@pytest.mark.parametrize("command", [
+    "git commit -q -F - <<'EOF'\nA title\n\njumyo data belongs to the user\nEOF",
+    'git commit -m "first line\njumyo ingest is described here"',
+    "cat > notes.md <<EOF\njumyo score --instance me\nEOF\nls",
+])
+def test_guard_ignores_text_that_only_looks_like_a_command(tmp_path, command):
+    assert guard(bash(command, "coach"), tmp_path) is None
+
+
+@pytest.mark.parametrize("command", [
+    "bash <<'EOF'\njumyo score --instance me\nEOF",
+    "cat notes.md <<EOF\ntext\nEOF\njumyo score --instance me",
+    "git status; jumyo score --instance me",
+    "X=\"a b\" jumyo score --instance me",
+])
+def test_guard_still_stops_real_commands(tmp_path, command):
+    assert "not allowed" in guard(bash(command, "coach"), tmp_path)
+
+
+def test_quoted_text_cannot_choose_a_profile(tmp_path):
+    assert gate(session('git commit -m "jumyo profile use --name default\njumyo profile use --name default"'), tmp_path) is None
+    assert not (tmp_path / ".jumyo/sessions/s1").exists()
+
+
 def gate(event: dict, user_home: Path) -> str | None:
     done = subprocess.run([sys.executable, str(ROOT / "hooks/guard.py")], input=json.dumps(event), capture_output=True, text=True,
                           env={"HOME": str(user_home)}, check=True)

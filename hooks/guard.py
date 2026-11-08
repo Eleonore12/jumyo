@@ -27,6 +27,20 @@ LOG_WRITE = re.compile(rf"(?<![0-9&])>>?\s*[\"']?{LOG_FILE}"  # a redirect into 
                        rf"|\b(?:rm|mv|truncate|tee|dd)\b[^;|&\n]*events\.jsonl"
                        rf"|\bsed\s+-i[^;|&\n]*events\.jsonl|\bperl\s+-\S*i[^;|&\n]*events\.jsonl"
                        rf"|\bcp\b[^;|&\n]*events\.jsonl[\"']?\s*(?:$|[;|&\n])")
+HEREDOC = re.compile(r"(?P<head><<-?\s*['\"]?(?P<tag>\w+)['\"]?[^\n]*\n).*?\n\s*(?P=tag)[ \t]*(?=\n|$)", re.S)
+FEEDS_SHELL = re.compile(r"\b(?:ba|z|da)?sh\b[^\n]*$")
+QUOTED = re.compile(r"\"(?:[^\"\\]|\\.)*\"|'[^']*'", re.S)
+
+
+def without_text(command: str) -> str:
+    """The command with what is only text removed: heredoc bodies (unless fed to a shell) and quoted strings."""
+
+    def body(match: re.Match[str]) -> str:
+        return match.group(0) if FEEDS_SHELL.search(command[:match.start()]) else match.group("head")
+
+    return QUOTED.sub('""', HEREDOC.sub(body, command))
+
+
 OPEN_COMMANDS = {"doctor", "profile list", "profile use"}
 DATA_MENTION = re.compile(r"\.jumyo(?!/\.venv)(?![\w-])")
 PROFILE_USE = re.compile(r"\bprofile\s+use\b[^;|&\n]*?--name[=\s]+[\"']?([a-z0-9][a-z0-9_-]*)")
@@ -115,14 +129,15 @@ def check_bash(event: dict, command: str, role: str, agents: dict[str, dict]) ->
         if "/inbox/" in command and role not in INBOX_OWNERS:
             deny("only Data Processor, Device Technician and Nutritionist open inbox files.")
     allowed = set(agents[role]["commands"])
-    for first, second in CMD.findall(command):
+    invoked = CMD.findall(without_text(command))
+    for first, second in invoked:
         if first not in allowed and f"{first} {second}".strip() not in allowed:
             deny(f"`jumyo {first} {second}`".replace(" `", "`") + f" is not allowed for {agents[role]['alias']}. Ask jūmyō to hand it to the owner.")
     marker = session_marker(event)
     if marker is None:
         return
-    names = [f"{first} {second}".strip() for first, second in CMD.findall(command)]
-    use = PROFILE_USE.search(command)
+    names = [f"{first} {second}".strip() for first, second in invoked]
+    use = PROFILE_USE.search(command) if "profile use" in names else None
     if use and role == "orchestrator":
         marker.parent.mkdir(parents=True, exist_ok=True)
         marker.write_text(use.group(1), encoding="utf-8")

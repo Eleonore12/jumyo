@@ -1,7 +1,7 @@
 {
   "name": "jumyo",
   "displayName": "jūmyō",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A personal longevity team of Claude agents: health records, screened plans, scored predictions.",
   "license": "MIT",
   "keywords": [
