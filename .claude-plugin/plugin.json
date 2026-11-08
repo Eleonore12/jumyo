@@ -1,0 +1,18 @@
+{
+  "name": "jumyo",
+  "displayName": "jūmyō",
+  "version": "0.1.0",
+  "description": "A personal longevity team of Claude agents: health records, screened plans, scored predictions.",
+  "license": "MIT",
+  "keywords": [
+    "jumyo",
+    "health",
+    "agents"
+  ],
+  "author": {
+    "name": "Eleonore12",
+    "url": "https://github.com/Eleonore12"
+  },
+  "homepage": "https://github.com/Eleonore12/jumyo",
+  "repository": "https://github.com/Eleonore12/jumyo"
+}

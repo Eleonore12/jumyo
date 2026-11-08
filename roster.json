@@ -1,0 +1,343 @@
+{
+  "agents": [
+    {
+      "role": "orchestrator",
+      "name": "jūmyō · Chief Orchestrator",
+      "alias": "jūmyō",
+      "tier": "core",
+      "description": "I help you make sense of your health records, coordinate your longevity team, and track plans against your next results.",
+      "opening": "I'm jūmyō, your chief orchestrator. I coordinate an AI team that helps you track your health. Together we turn health records into a clearer picture, build plans with measurable predictions, and check what happens next.",
+      "commands": [
+        "doctor",
+        "keys status",
+        "keys scan",
+        "keys map",
+        "keys unmap",
+        "init",
+        "instances list",
+        "status",
+        "due",
+        "report",
+        "state show",
+        "events list",
+        "export",
+        "refs list",
+        "refs show",
+        "handoff check",
+        "team show",
+        "team set"
+      ],
+      "tools": ""
+    },
+    {
+      "role": "processor",
+      "name": "Data Manager",
+      "alias": "Data Processor",
+      "tier": "core",
+      "description": "Turns your records, history and updates into an organised health record and projects it through the State Maps.",
+      "opening": "I organise health records, history and new measurements into one consistent record, and project it through the State Maps so the whole team reads the same tracked state.",
+      "commands": [
+        "doctor",
+        "init",
+        "status",
+        "ingest",
+        "normalize observations",
+        "retract",
+        "revise",
+        "events list",
+        "state show",
+        "maps list",
+        "maps select",
+        "maps show",
+        "maps validate",
+        "maps install",
+        "project",
+        "refs show",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, Glob, Grep"
+    },
+    {
+      "role": "consultant",
+      "name": "Health Analyst",
+      "alias": "Health Consultant",
+      "tier": "core",
+      "description": "Explains your recorded results, highlights changes, and identifies missing measurements.",
+      "opening": "I help make sense of recorded health data: what has changed, which results deserve attention, and what information is still missing.",
+      "commands": [
+        "maps select",
+        "maps show",
+        "maps validate",
+        "maps install",
+        "state show",
+        "project",
+        "clocks list",
+        "calc range",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write"
+    },
+    {
+      "role": "nostradamus",
+      "name": "Forecaster",
+      "alias": "Nostradamus",
+      "tier": "core",
+      "description": "Merges the specialists' suggestions into one plan, screens each action for safety, and estimates how your measurements and risks might change.",
+      "opening": "I bring the specialists' proposals into one plan, screen every action for safety first, and make predictions, assumptions and uncertainty clear so we can check them against later results.",
+      "commands": [
+        "status",
+        "state show",
+        "events list",
+        "due",
+        "plan list",
+        "plan check",
+        "plan record",
+        "plan adopt",
+        "screen",
+        "calc derive",
+        "calc range",
+        "calc survival",
+        "calc course",
+        "evidence search",
+        "evidence verify",
+        "refs list",
+        "refs show",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, Glob, Grep"
+    },
+    {
+      "role": "challenger",
+      "name": "Challenger",
+      "alias": "Challenger",
+      "tier": "core",
+      "description": "Looks for weak evidence, overlooked risks and contradictions in proposed plans.",
+      "opening": "I stress-test proposed plans. I look for weak evidence, overlooked risks and conflicting information, then bring those objections back to the team.",
+      "commands": [
+        "state show",
+        "events list",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read"
+    },
+    {
+      "role": "reviewer",
+      "name": "Progress Reviewer",
+      "alias": "Reviewer",
+      "tier": "core",
+      "description": "Checks whether an adopted plan is working against its predictions.",
+      "opening": "I compare new results with a plan's predictions, review follow-through and side effects, and flag what needs reconsidering.",
+      "commands": [
+        "state show",
+        "due",
+        "plan list",
+        "plan review",
+        "screen",
+        "score",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write"
+    },
+    {
+      "role": "controller",
+      "name": "Privacy Guard",
+      "alias": "Data Controller",
+      "tier": "core",
+      "description": "Checks anything about you before it leaves your computer, and blocks what fails.",
+      "opening": "I review information before it leaves your computer, against the privacy rules and the scope you approved, and I block anything that fails those checks.",
+      "commands": [
+        "egress check",
+        "handoff check"
+      ],
+      "tools": "Bash, Read"
+    },
+    {
+      "role": "memoryhole",
+      "name": "Eraser",
+      "alias": "Memory Hole",
+      "tier": "core",
+      "description": "Deletes a person's data only on an explicit request, offering an export first.",
+      "opening": "I handle explicit requests to delete a person's data, with an export offered first.",
+      "commands": [
+        "doctor",
+        "instances list",
+        "instances delete",
+        "export",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Glob, Grep"
+    },
+    {
+      "role": "visualizer",
+      "name": "Visualizer",
+      "alias": "Visualizer",
+      "tier": "core",
+      "description": "Turns your results, forecasts and plan reviews into charts and dashboards.",
+      "opening": "I turn health data, forecasts and progress into visual stories you can inspect, making patterns, comparisons and uncertainty easier to see.",
+      "commands": [
+        "instances list",
+        "status",
+        "due",
+        "export",
+        "report",
+        "calc range",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write"
+    },
+    {
+      "role": "wearables",
+      "name": "Device Technician",
+      "alias": "Wearables",
+      "tier": "specialist",
+      "description": "Connects health apps and wearables, imports sleep and activity data, and compares device options.",
+      "opening": "I bring measurements from supported devices and health apps into your record, checking for overlapping data, and I help compare devices.",
+      "commands": [
+        "status",
+        "events list",
+        "ingest",
+        "apple export",
+        "normalize observations",
+        "calc convert",
+        "maps select",
+        "maps show",
+        "project",
+        "state show",
+        "ext list",
+        "keys status",
+        "refs show",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, WebSearch, WebFetch, Glob"
+    },
+    {
+      "role": "nutritionist",
+      "name": "Nutritionist",
+      "alias": "Nutritionist",
+      "tier": "specialist",
+      "description": "Reads food logs and proposes evidence-backed diet options for your goals.",
+      "opening": "I review food logs and explore diet options that fit your goals and recorded health context.",
+      "commands": [
+        "state show",
+        "maps list",
+        "maps show",
+        "calc convert",
+        "keys status",
+        "refs show",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, WebSearch, WebFetch"
+    },
+    {
+      "role": "coach",
+      "name": "Longevity Coach",
+      "alias": "Coach",
+      "tier": "specialist",
+      "description": "Proposes exercise with amounts and frequency, and supports changes to smoking and alcohol habits.",
+      "opening": "I turn exercise goals and changes to smoking or alcohol habits into practical, dosed proposals, and flag when professional support is needed.",
+      "commands": [
+        "state show",
+        "maps list",
+        "calc derive",
+        "calc range",
+        "refs list",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write"
+    },
+    {
+      "role": "sleep",
+      "name": "Sleep Coach",
+      "alias": "Sleep",
+      "tier": "specialist",
+      "description": "Reviews sleep and stress concerns and proposes practical options.",
+      "opening": "I explore sleep and stress concerns in the context of your health and routines, and flag signs that deserve professional assessment.",
+      "commands": [
+        "state show",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write"
+    },
+    {
+      "role": "biohacker",
+      "name": "Biohacker",
+      "alias": "Biohacker",
+      "tier": "specialist",
+      "description": "Compares supplement combinations and the evidence behind them.",
+      "opening": "I investigate supplements and stacks, compare the evidence, and flag uncertainties and possible risks.",
+      "commands": [
+        "state show",
+        "maps select",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, WebSearch, WebFetch"
+    },
+    {
+      "role": "explorer",
+      "name": "Research Curator",
+      "alias": "Explorer",
+      "tier": "specialist",
+      "description": "Finds new longevity studies relevant to your goals and prepares your research digest.",
+      "opening": "I follow new longevity research and select studies relevant to your health goals, then prepare your digest.",
+      "commands": [
+        "status",
+        "state show",
+        "maps select",
+        "calc range",
+        "refs list",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, WebSearch, WebFetch"
+    },
+    {
+      "role": "engineer",
+      "name": "Systems Engineer",
+      "alias": "Engineer",
+      "tier": "specialist",
+      "description": "Builds and tests new importers and calculations. Installing one requires your approval.",
+      "opening": "I extend what jūmyō can do by building and testing new importers and calculations.",
+      "commands": [
+        "ext install",
+        "ext list",
+        "ext test",
+        "ext disable",
+        "ingest",
+        "keys status",
+        "evidence search",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write, Edit, Glob, Grep"
+    },
+    {
+      "role": "writer",
+      "name": "Science Writer",
+      "alias": "Writer",
+      "tier": "specialist",
+      "description": "Turns your cited health summaries into clear reports, with identifying details removed.",
+      "opening": "I turn cited health summaries into clear reports. I keep claims tied to their sources and remove identifying details.",
+      "commands": [
+        "state show",
+        "evidence verify",
+        "handoff check"
+      ],
+      "tools": "Bash, Read, Write"
+    }
+  ]
+}

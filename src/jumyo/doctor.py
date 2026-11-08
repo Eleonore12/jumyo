@@ -1,0 +1,56 @@
+"""`jumyo doctor`: versions, extras, JUMYO_HOME, keys (booleans + what each unlocks) and fixes; --online checks
+that every reference's api_base answers."""
+
+from __future__ import annotations
+
+import importlib.metadata
+import platform
+from typing import Any
+
+from jumyo import __version__, errors, keys, net, paths, references
+
+
+def _version(dist: str) -> str | None:
+    try:
+        return importlib.metadata.version(dist)
+    except importlib.metadata.PackageNotFoundError:
+        return None
+
+
+def _reachable(url: str) -> str:
+    try:
+        net.request("GET", url, timeout=15)
+        return "ok"
+    except errors.NetworkError as exc:
+        return "ok" if exc.status is not None else "unreachable"
+
+
+def doctor(online: bool = False) -> dict[str, Any]:
+    """`jumyo doctor`."""
+    versions = {"jumyo": __version__, "python": platform.python_version(), "pydantic": _version("pydantic"),
+                "pyyaml": _version("PyYAML"), "biolearn": _version("biolearn")}
+    home = paths.jumyo_home()
+    fixes: list[str] = []
+    if versions["biolearn"] is None:
+        fixes.append('methylation clocks (optional): see the README')
+    if not keys.env_file().is_file():
+        fixes.append("optional keys: add them to ~/.jumyo/.env (see .env.example)")
+    try:
+        refs = references.load()
+    except errors.AppError as exc:
+        refs = {}
+        fixes.append(f"references/ is invalid: {exc.message}")
+    status = keys.status()
+    out: dict[str, Any] = {
+        "versions": versions,
+        "extras": {"clocks": versions["biolearn"] is not None},
+        "jumyo_home": str(home),
+        "home_exists": home.is_dir(),
+        "keys": {name: {"set": is_set, "unlocks": keys.UNLOCKS[name]} for name, is_set in status.items()},
+        "references": len(refs),
+        "maps": sorted(p.stem for p in (paths.REPO_ROOT / "maps").glob("*.yaml")),
+        "fixes": fixes,
+    }
+    if online:
+        out["reachability"] = {ref.id: _reachable(ref.api_base) for ref in refs.values() if ref.api_base}
+    return out

@@ -1,0 +1,15 @@
+{
+  "name": "jumyo",
+  "owner": {
+    "name": "Eleonore12",
+    "url": "https://github.com/Eleonore12"
+  },
+  "plugins": [
+    {
+      "name": "jumyo",
+      "source": "./",
+      "description": "A personal longevity team of Claude agents: health records, screened plans, scored predictions."
+    }
+  ],
+  "description": "jūmyō, a personal longevity team of Claude agents."
+}

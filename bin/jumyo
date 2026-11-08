@@ -1,0 +1,24 @@
+#!/bin/sh
+# Runs the jūmyō toolbelt, creating its private Python environment on first use.
+set -e
+SELF=$0
+while [ -L "$SELF" ]; do SELF=$(readlink "$SELF"); done
+ROOT=$(CDPATH= cd -- "$(dirname -- "$SELF")/.." && pwd)
+DATA="${JUMYO_HOME:-$HOME/.jumyo}"
+VENV="${JUMYO_VENV:-$DATA/.venv}"
+DEPS="pydantic>=2 PyYAML matplotlib>=3.8"
+STAMP="$VENV/.deps"
+if [ ! -x "$VENV/bin/python" ] || [ "$(cat "$STAMP" 2>/dev/null)" != "$DEPS" ]; then
+  mkdir -p "$DATA"
+  if command -v uv >/dev/null 2>&1; then
+    uv venv --quiet --allow-existing --python ">=3.11" "$VENV" >&2
+    # shellcheck disable=SC2086
+    uv pip install --quiet --python "$VENV/bin/python" $DEPS >&2
+  else
+    python3 -m venv "$VENV" >&2
+    # shellcheck disable=SC2086
+    "$VENV/bin/python" -m pip install --quiet $DEPS >&2
+  fi
+  printf '%s' "$DEPS" > "$STAMP"
+fi
+PYTHONPATH="$ROOT/src" exec "$VENV/bin/python" -m jumyo "$@"
