@@ -132,6 +132,11 @@ CORE: dict[str, Cmd] = {
     "refs list": Cmd("jumyo.references:list_refs", (A("--kind", choices=V(ReferenceKind)),),
                      "trusted references, grouped by kind"),
     "refs show": Cmd("jumyo.references:show", (A("id", metavar="ID"),), "one reference"),
+    # profiles
+    "profile list": Cmd("jumyo.profile:list_profiles", (), "profiles and whether each holds data (never what it says)"),
+    "profile use": Cmd("jumyo.profile:use", (A("--name", required=True), A("--new", action="store_true", help="create it")),
+                       "choose the profile for this computer, after the user picked it"),
+    "home": Cmd("jumyo.profile:home", (), "the data folder in use"),
     # team and egress
     "team show": Cmd("jumyo.team:show", (), "the roster, and which specialists are on this user's team"),
     "team set": Cmd("jumyo.team:set_specialists", (A("--specialists", required=True, help="comma-separated role slugs, or 'none'"),),

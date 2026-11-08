@@ -18,7 +18,7 @@ only make it stricter.
 `<JUMYO_HOME>/memory.md`, which only the orchestrator keeps (standing approvals, tips on or off). *Routine*: a scheduled task, created
 only when the user asks and the session offers one; otherwise the user runs `/jumyo:checkin`. *Playbook* or
 *skill* in a path like `nostradamus/plan`: the file `playbooks/nostradamus/plan/SKILL.md`. `<JUMYO_HOME>` is
-`~/.jumyo` unless the variable is set. *persona.md* is `playbooks/shared/persona.md`.
+the folder of the active profile: `jumyo home` prints it. *persona.md* is `playbooks/shared/persona.md`.
 
 ## Roster
 

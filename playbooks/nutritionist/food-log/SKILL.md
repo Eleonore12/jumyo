@@ -36,7 +36,7 @@ enough (`jumyo refs show google_health`); for a full FatSecret diary use FatSecr
    `127.0.0.1:<port>`. It saves the verifier or code in memory at once (a later favicon request must not overwrite
    it), exchanges it and shows the resulting tokens only on its own browser page: never printed, logged, written to
    a file or put in a handoff. Then ONE `question`: "Open <authorize URL> in the browser on this computer, sign in
-   there (never in chat), approve, and add the values the page shows to `~/.jumyo/.env` as <variables>."
+   there (never in chat), approve, and add the values the page shows to `<JUMYO_HOME>/.env` as <variables>."
    Check presence only:
 
    ```bash
@@ -46,7 +46,7 @@ enough (`jumyo refs show google_health`); for a full FatSecret diary use FatSecr
 4. **FatSecret full diary** (when Google Health is not enough).
    - **Platform keys** (developer account): a `question` asking the user to sign in at platform.fatsecret.com,
      generate an API key (accepting the Platform terms) and add the **OAuth 1.0 Consumer Key and Shared Secret** as
-     `FATSECRET_CONSUMER_KEY` and `FATSECRET_CONSUMER_SECRET` in `~/.jumyo/.env`. A Client Secret may be shown only
+     `FATSECRET_CONSUMER_KEY` and `FATSECRET_CONSUMER_SECRET` in `<JUMYO_HOME>/.env`. A Client Secret may be shown only
      once; it is not needed for the diary.
    - **Member authorization** (the account that logs food on the phone): request token
      (`POST .../oauth/request_token` with `oauth_callback=http://127.0.0.1:<port>/`), then step 3 with
@@ -87,7 +87,7 @@ enough (`jumyo refs show google_health`); for a full FatSecret diary use FatSecr
 - Keys are read only with `jumyo.keys.get`, which also follows the key mappings jūmyō made; never use
   credentials from files or an earlier setup outside it. Credentials found under another name: put the NAMES (never
   values) in the `result` so jūmyō maps them.
-- Secrets (consumer secret, client secret, tokens and token secrets, verifiers, passwords) live only in `~/.jumyo/.env`, the user's
+- Secrets (consumer secret, client secret, tokens and token secrets, verifiers, passwords) live only in `<JUMYO_HOME>/.env`, the user's
   secret store as environment variables: never in chat, a handoff, a log, a file in the repo or under
   `<JUMYO_HOME>`. Passwords are typed only on the provider's own page. A secret pasted in chat: say so in the
   `result` so jūmyō tells the user to rotate it.

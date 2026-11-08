@@ -10,6 +10,7 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 from jumyo.errors import NotFound, ValidationError
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_PROFILE = "default"
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 _WINDOWS_RESERVED = {"con", "prn", "aux", "nul"} | {f"{p}{i}" for p in ("com", "lpt") for i in range(1, 10)}
 
@@ -32,8 +33,23 @@ def new_id(prefix: str) -> str:
     return f"{prefix}_{secrets.token_hex(8)}"
 
 
+def data_root() -> Path:
+    """The folder that holds every profile. It belongs to the macOS user, so every Claude account on this user sees it."""
+    return Path.home() / ".jumyo"
+
+
+def active_profile() -> str:
+    path = data_root() / "active_profile"
+    return (path.read_text(encoding="utf-8").strip() if path.is_file() else "") or DEFAULT_PROFILE
+
+
+def profile_dir(name: str) -> Path:
+    return data_root() if name == DEFAULT_PROFILE else data_root() / "profiles" / name
+
+
 def jumyo_home() -> Path:
-    return Path(os.environ.get("JUMYO_HOME") or Path.home() / ".jumyo")
+    """JUMYO_HOME when set, else the folder of the active profile."""
+    return Path(os.environ.get("JUMYO_HOME") or profile_dir(active_profile()))
 
 
 def instance_dir(name: str, *, must_exist: bool = True) -> Path:

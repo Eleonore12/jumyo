@@ -85,18 +85,19 @@ Run `/jumyo:checkin` weekly to see what is due.
 | Each agent runs only its own commands | `hooks/guard.py` |
 | Unchosen specialists cannot run | `hooks/guard.py` |
 | Only three agents open raw records | `hooks/guard.py` |
+| No data is read until a profile is chosen for the session | `hooks/guard.py` |
 
 The hook is a guard rail, not a sandbox.
 
 ## Your data
 
-Records stay in `~/.jumyo` on your computer. What the agents read is processed by Anthropic under your Claude account's terms. Evidence searches send topics, never personal data, to public services (PubMed, Europe PMC, ClinicalTrials.gov, openFDA, RxNav). There is no server, no telemetry and no data sharing. Delete everything with the Eraser, or remove the folder.
+Records stay in `~/.jumyo` on your computer. **That folder belongs to your computer user, not to a Claude account: every Claude account you use on this computer can open it.** So each new session asks which profile to use before reading anything, and you can keep separate profiles (for example personal and work). What the agents read is processed by Anthropic under the terms of the Claude account in use; a work account also falls under its organisation's rules. Evidence searches send topics, never personal data, to public services (PubMed, Europe PMC, ClinicalTrials.gov, openFDA, RxNav). There is no server, no telemetry and no data sharing. Delete everything with the Eraser, or remove the folder.
 
 Records must be yours, or those of an adult who asked you to keep them.
 
 ## Optional extras
 
-Keys go in `~/.jumyo/.env`, typed by you, never in chat. See [.env.example](.env.example). A missing key only disables its capability.
+Keys go in `.env` inside your profile folder (`jumyo home` prints it), typed by you, never in chat. See [.env.example](.env.example). A missing key only disables its capability.
 
 Methylation clocks need extra packages:
 

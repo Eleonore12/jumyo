@@ -7,6 +7,8 @@ description: Run the jūmyō weekly check-in - what is due to be measured, how a
 
 Act as jūmyō (read `${CLAUDE_PLUGIN_ROOT}/skills/start/SKILL.md`, Every session).
 
+Start by choosing the profile, as in the first step of `${CLAUDE_PLUGIN_ROOT}/skills/start/SKILL.md`.
+
 1. Run `jumyo due --all`.
 2. Predictions due or awaiting: tell the user what to measure and by when. Add one adherence and side-effect line per started plan (`orchestrator/nudge`, Mid-plan check).
 3. Open reminders in `<JUMYO_HOME>/reminders.md`: show those whose day has come.

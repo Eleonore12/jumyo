@@ -98,3 +98,27 @@ def test_screening_warns_when_nothing_is_known_about_the_person(cli, tmp_path):
     person(cli, tmp_path)
     codes = [w["code"] for w in cli("screen", "--instance", "me", "--file", plan(tmp_path))["warnings"]]
     assert "NO_CARE_CONTEXT" in codes
+
+
+def test_profiles_keep_data_apart(tmp_path, monkeypatch, capsys):
+    from jumyo.cli import main
+
+    monkeypatch.delenv("JUMYO_HOME", raising=False)
+    monkeypatch.setenv("HOME", str(tmp_path))
+
+    def run(*args):
+        try:
+            main(list(args))
+        except SystemExit:
+            pass
+        return json.loads(capsys.readouterr().out)
+
+    assert run("init", "--instance", "me", "--sex", "F", "--relation", "self")["ok"]
+    assert [p["has_data"] for p in run("profile", "list")["data"]["profiles"]] == [True]
+    assert not run("profile", "use", "--name", "work")["ok"]
+    made = run("profile", "use", "--name", "work", "--new")["data"]
+    assert run("home")["data"]["path"] == made["path"]
+    assert run("instances", "list")["data"] == [] or not run("instances", "list")["data"].get("instances")
+    assert not run("profile", "use", "--name", "default", "--new")["ok"]
+    assert run("profile", "use", "--name", "default")["ok"]
+    assert run("home")["data"]["path"] == str(tmp_path / ".jumyo")

@@ -43,7 +43,7 @@ dashboard. The daily rows then go through `wearables/import` steps 3-6.
    a Google Cloud project owned by the user; enable the Health API; the OAuth consent screen (in **Testing** mode
    the refresh token expires after about **7 days**, so they re-consent until the app is published); an OAuth client
    (Desktop, or Web with redirect `http://127.0.0.1:<port>/`); only the **read-only** scopes for the metrics the maps
-   use (with Nutritionist on the team, also the read-only nutrition scopes). Then they add `GOOGLE_HEALTH_CLIENT_ID` and `GOOGLE_HEALTH_CLIENT_SECRET` to `~/.jumyo/.env` in their own editor, never in chat.
+   use (with Nutritionist on the team, also the read-only nutrition scopes). Then they add `GOOGLE_HEALTH_CLIENT_ID` and `GOOGLE_HEALTH_CLIENT_SECRET` to `<JUMYO_HOME>/.env` in their own editor, never in chat.
    The client JSON never goes in chat, a handoff or the repo. "Help with setup" or "do it for me": the same steps,
    one at a time; a sign-in only as `shared/team` rule 13 allows.
 
@@ -52,7 +52,7 @@ dashboard. The daily rows then go through `wearables/import` steps 3-6.
    the reference notes) and shows the refresh token only on its own browser page: never printed, logged, written
    to a file or put in a handoff. Then ONE `question`: "Open <authorize URL> in the browser on this computer, sign
    in to Google there (never in chat), approve, and add the token the page shows as `GOOGLE_HEALTH_REFRESH_TOKEN`
-   in `~/.jumyo/.env`." Say once that Testing mode needs this again in about 7 days. Once the variable is set,
+   in `<JUMYO_HOME>/.env`." Say once that Testing mode needs this again in about 7 days. Once the variable is set,
    verify the account with one cheap call (the user profile endpoint the docs name) before any bulk pull.
 
 4. **Pull history.** One script under `<JUMYO_HOME>/work/<thread>/` reads the three variables with `jumyo.keys.get` (environment or `.env`),
@@ -78,7 +78,7 @@ dashboard. The daily rows then go through `wearables/import` steps 3-6.
 
 ## Rules
 
-- Secrets (client secret, refresh and access tokens, authorization codes) live only in `~/.jumyo/.env` as
+- Secrets (client secret, refresh and access tokens, authorization codes) live only in `<JUMYO_HOME>/.env` as
   environment variables: never in chat, a handoff, a log, a file in the repo or under `<JUMYO_HOME>`. A secret
   pasted in chat: say so in the `result` so jūmyō tells the user to rotate it.
 - Keys are read only with `jumyo.keys.get`, which also follows the key mappings jūmyō made; never use

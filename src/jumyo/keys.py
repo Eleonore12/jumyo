@@ -31,7 +31,7 @@ UNLOCKS: dict[str, str] = {
     "FATSECRET_CONSUMER_SECRET": "FatSecret Platform OAuth 1.0 shared secret for nutritionist/food-log",
     "FATSECRET_ACCESS_TOKEN": "FatSecret member diary access token (3-legged OAuth 1.0) for nutritionist/food-log",
     "FATSECRET_ACCESS_SECRET": "FatSecret member diary access token secret for nutritionist/food-log",
-    "JUMYO_HOME": "data directory (default ~/.jumyo)",
+    "JUMYO_HOME": "data directory (default: the active profile under ~/.jumyo)",
     "JUMYO_DEBUG": "redacted tracebacks on stderr when 1",
     "JUMYO_ENV_FILE": "alternative .env path",
 }

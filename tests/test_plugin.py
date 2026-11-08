@@ -128,5 +128,52 @@ def test_onboarding_never_asks_about_ethnicity():
     assert "--ethnicity" not in (ROOT / "skills/start/SKILL.md").read_text(encoding="utf-8")
 
 
+@pytest.mark.parametrize("command", [
+    "wc -l < ~/x/events.jsonl", "ls -la ~/x/events.jsonl 2>&1", "stat ~/x/events.jsonl > /tmp/out", "cat ~/x/events.jsonl | wc -l",
+])
+def test_guard_lets_reads_of_the_log_through(tmp_path, command):
+    assert guard(bash(command, "processor"), tmp_path) is None
+
+
+@pytest.mark.parametrize("command", [
+    "echo x > ~/x/events.jsonl", "rm ~/x/events.jsonl", "sed -i '' s/a/b/ ~/x/events.jsonl", "cp /tmp/a ~/x/events.jsonl",
+])
+def test_guard_stops_writes_to_the_log(tmp_path, command):
+    assert "append-only" in guard(bash(command, "processor"), tmp_path)
+
+
+def gate(event: dict, user_home: Path) -> str | None:
+    done = subprocess.run([sys.executable, str(ROOT / "hooks/guard.py")], input=json.dumps(event), capture_output=True, text=True,
+                          env={"HOME": str(user_home)}, check=True)
+    return json.loads(done.stdout)["hookSpecificOutput"]["permissionDecisionReason"] if done.stdout else None
+
+
+def session(command: str, sid: str = "s1", agent: str | None = None) -> dict:
+    return {**bash(command, agent), "session_id": sid}
+
+
+def test_new_session_reads_nothing_until_a_profile_is_chosen(tmp_path):
+    assert "no profile is chosen" in gate(session("jumyo status --instance me"), tmp_path)
+    assert "no profile is chosen" in gate(session("cat ~/.jumyo/me/subject.json"), tmp_path)
+    read = {"tool_name": "Read", "tool_input": {"file_path": str(tmp_path / ".jumyo/memory.md")}, "session_id": "s1"}
+    assert "no profile is chosen" in gate(read, tmp_path)
+    assert gate(session("jumyo profile list"), tmp_path) is None
+    assert gate(session("jumyo profile use --name default"), tmp_path) is None
+    assert gate(session("jumyo status --instance me"), tmp_path) is None
+    assert gate(read, tmp_path) is None
+    assert "no profile is chosen" in gate(session("jumyo status --instance me", sid="other-account"), tmp_path)
+
+
+def test_worker_cannot_choose_the_profile(tmp_path):
+    assert gate(session("jumyo profile use --name default", agent="coach"), tmp_path)
+    assert not (tmp_path / ".jumyo/sessions/s1").exists()
+
+
+def test_session_stops_when_another_changes_the_profile(tmp_path):
+    gate(session("jumyo profile use --name default"), tmp_path)
+    (tmp_path / ".jumyo/active_profile").write_text("work", encoding="utf-8")
+    assert "changed" in gate(session("jumyo status --instance me"), tmp_path)
+
+
 def test_no_sharing_or_community_concept_in_the_laws():
     assert not re.search(r"communit|share|pool", LAWS, re.I)

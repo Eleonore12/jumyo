@@ -25,7 +25,10 @@
         "refs show",
         "handoff check",
         "team show",
-        "team set"
+        "team set",
+        "home",
+        "profile list",
+        "profile use"
       ],
       "tools": ""
     },
@@ -55,7 +58,8 @@
         "refs show",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, Glob, Grep"
     },
@@ -76,7 +80,8 @@
         "clocks list",
         "calc range",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write"
     },
@@ -105,7 +110,8 @@
         "evidence verify",
         "refs list",
         "refs show",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, Glob, Grep"
     },
@@ -120,7 +126,8 @@
         "state show",
         "events list",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read"
     },
@@ -138,7 +145,8 @@
         "plan review",
         "screen",
         "score",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write"
     },
@@ -151,7 +159,8 @@
       "opening": "I review information before it leaves your computer, against the privacy rules and the scope you approved, and I block anything that fails those checks.",
       "commands": [
         "egress check",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read"
     },
@@ -167,7 +176,8 @@
         "instances list",
         "instances delete",
         "export",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Glob, Grep"
     },
@@ -185,7 +195,8 @@
         "export",
         "report",
         "calc range",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write"
     },
@@ -212,7 +223,8 @@
         "refs show",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, WebSearch, WebFetch, Glob"
     },
@@ -232,7 +244,8 @@
         "refs show",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, WebSearch, WebFetch"
     },
@@ -251,7 +264,8 @@
         "refs list",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write"
     },
@@ -266,7 +280,8 @@
         "state show",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write"
     },
@@ -282,7 +297,8 @@
         "maps select",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, WebSearch, WebFetch"
     },
@@ -301,7 +317,8 @@
         "refs list",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, WebSearch, WebFetch"
     },
@@ -321,7 +338,8 @@
         "keys status",
         "evidence search",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write, Edit, Glob, Grep"
     },
@@ -335,7 +353,8 @@
       "commands": [
         "state show",
         "evidence verify",
-        "handoff check"
+        "handoff check",
+        "home"
       ],
       "tools": "Bash, Read, Write"
     }
