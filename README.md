@@ -32,7 +32,16 @@ Every agent carries these, in this order. A lower law never overrides a higher o
 
 **Specialists, you choose**
 
-Device Technician · Nutritionist · Longevity Coach · Sleep Coach · Biohacker · Research Curator · Systems Engineer · Science Writer
+| Specialist | Job |
+|---|---|
+| Device Technician | Connects your health apps and wearables and imports your sleep and activity data. |
+| Nutritionist | Reads your food logs and proposes evidence-backed diet options for your goals. |
+| Longevity Coach | Proposes exercise with amounts and frequency, and supports changes to smoking and alcohol habits. |
+| Sleep Coach | Reviews your sleep and stress concerns and proposes practical options. |
+| Biohacker | Compares supplement combinations and the evidence behind them. |
+| Research Curator | Finds new longevity studies relevant to your goals and prepares your research digest. |
+| Systems Engineer | Builds and tests new importers and calculations, installed only with your approval. |
+| Science Writer | Turns your cited health summaries into clear reports, with identifying details removed. |
 
 A specialist you did not pick is off: no other agent stands in for it, and a hook refuses to start it. Change your team any time with `/jumyo:team`.
 
@@ -60,7 +69,6 @@ To try a local copy, run `claude --plugin-dir ./jumyo`.
 - "Here are my latest blood test results. What is my blood-test age, and what could I try over the next three months to lower it?"
 - "Here is my life story so far. Continue it and show me my life arrow."
 - "Is my plan working?"
-- "Forget everything about `mother`."
 
 Run `/jumyo:checkin` weekly to see what is due.
 
