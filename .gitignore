@@ -8,3 +8,20 @@ build/
 dist/
 .DS_Store
 instances/
+
+# Secrets
+.env.*
+!.env.example
+
+# Local Claude settings
+.claude/settings.local.json
+
+# Health data, if a test folder is ever created inside the repository
+.jumyo/
+start-test-home*/
+events.jsonl
+
+# Tool output
+uv.lock
+.coverage
+.ruff_cache/
